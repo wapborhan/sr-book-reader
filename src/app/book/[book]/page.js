@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { getBookBySlug } from "@/data/books";
+import { BOOKS, getBookBySlug } from "@/data/books";
 
 const PDFViewer = dynamic(() => import("../../../components/pdf-viewer"), {
   ssr: false,
@@ -10,6 +10,12 @@ const PDFViewer = dynamic(() => import("../../../components/pdf-viewer"), {
     </div>
   ),
 });
+
+export function generateStaticParams() {
+  return BOOKS.map((book) => ({
+    book: book.slug,
+  }));
+}
 
 export function generateMetadata({ params }) {
   const book = getBookBySlug(params.book);

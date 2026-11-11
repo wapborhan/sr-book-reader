@@ -17,8 +17,14 @@ import {
   updateLastReadPage,
 } from "@/lib/reading-storage";
 
+function getBasePathPrefix() {
+  if (typeof window === "undefined") return "";
+  const idx = window.location.pathname.indexOf("/book/");
+  return idx > 0 ? window.location.pathname.slice(0, idx) : "";
+}
+
 if (typeof window !== "undefined") {
-  pdfjsLib.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.js";
+  pdfjsLib.GlobalWorkerOptions.workerSrc = `${getBasePathPrefix()}/pdf.worker.min.js`;
 }
 
 function resolveInitialPage(slug) {
@@ -406,8 +412,9 @@ function PDFReaderInner({ bookName }) {
 
     const loadPdf = async () => {
       try {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = `${getBasePathPrefix()}/pdf.worker.min.js`;
         loadingTask = pdfjsLib.getDocument({
-          url: `/pdf/${bookName}.pdf`,
+          url: `${getBasePathPrefix()}/pdf/${bookName}.pdf`,
           cMapPacked: true,
         });
 
@@ -1133,7 +1140,7 @@ function PDFReaderInner({ bookName }) {
               ↻ পৃষ্ঠা ঘোরান
             </button>
             <a
-              href={`/pdf/${bookName}.pdf`}
+              href={`${getBasePathPrefix()}/pdf/${bookName}.pdf`}
               download={`${bookName}.pdf`}
               className="rounded-xl border border-white/15 px-3 py-1.5 text-xs font-bold hover:bg-white/10"
             >
