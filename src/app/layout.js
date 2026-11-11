@@ -13,15 +13,16 @@ const geistMono = localFont({
 });
 
 export const metadata = {
-  title: "SR Book Reader",
-  description: "Different Type Book are Available.",
+  title: "SR Book Reader — ডিজিটাল বুক লাইব্রেরি",
+  description:
+    "আধুনিক বাংলা ও ইংরেজি ই-বুক রিডার — স্মার্ট বুকমার্কসহ পড়ুন আপনার প্রিয় বই, যেখানে থেমেছিলেন সেখান থেকেই আবার শুরু করুন।",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="bn" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased selection:bg-amber-500/30 selection:text-amber-200`}
       >
         {children}
       </body>
